@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+// import ReduxPage from "./pages/ReduxPage";
+// import HooksPage from "./pages/HooksPage";
+// import ReactReduxHookPage from "./pages/ReactReduxHookPage";
+// import ReactReduxPage from "./pages/ReactReduxPage";
 
-function App() {
+export default function App(props) {
+  const [count, setCount] = useState(0);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* <ReduxPage /> */}
+      {/* <HooksPage /> */}
+      {/* <button onClick={() => setCount(count + 1)}>{count}</button> */}
+      {/* <ReactReduxPage omg={count} /> */}
+
+      {/* <ReactReduxHookPage /> */}
+
+      <div>redux-demo</div>
     </div>
   );
 }
-
-export default App;
