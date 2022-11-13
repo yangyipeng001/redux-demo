@@ -13,7 +13,7 @@ import {
 } from '../redux-nut';
 
 
-function countReducer(state = 0, action) {
+export function countReducer(state = 0, action) {
     switch (action.type) {
         case 'ADD': 
             return state + 1
@@ -33,7 +33,11 @@ const store = createStore(
         count: countReducer,
         // user: userReducer,
     }),
-    applyMiddleware(promise, thunk, logger)
+    applyMiddleware(
+        promise,
+        thunk,
+        // logger
+    )
 )
 
 export default store
