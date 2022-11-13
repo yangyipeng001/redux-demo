@@ -1,5 +1,9 @@
 # redux-demo
 
+## 资料
+- [redux](https://cn.redux.js.org/)
+- [redux-github](https://github.com/reduxjs/redux)
+
 ## 项目
 ```bash
 # node >= 18
