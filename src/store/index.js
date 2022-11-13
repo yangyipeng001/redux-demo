@@ -1,9 +1,16 @@
-// import {createStore, applyMiddleware} from 'redux';
+// import {createStore, applyMiddleware, combineReducers} from 'redux';
 // import thunk from 'redux-thunk';
 // import logger from 'redux-logger'
 // import promise from 'redux-promise'
 
-import {createStore, applyMiddleware, logger, thunk, promise} from '../redux-nut';
+import {
+    createStore, 
+    applyMiddleware, 
+    logger, 
+    thunk, 
+    promise,
+    combineReducers,
+} from '../redux-nut';
 
 
 function countReducer(state = 0, action) {
@@ -19,8 +26,13 @@ function countReducer(state = 0, action) {
     }
 }
 
+// 创建store {count: 0, use: 'name}
 const store = createStore(
-    countReducer,
+    // countReducer,
+    combineReducers({
+        count: countReducer,
+        // user: userReducer,
+    }),
     applyMiddleware(promise, thunk, logger)
 )
 

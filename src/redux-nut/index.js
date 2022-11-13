@@ -4,6 +4,7 @@ import compose from './compose'
 import logger from './logger'
 import thunk from './thunk'
 import promise from './promise'
+import combineReducers from './combineReducers'
 
 export {
     createStore,
@@ -11,5 +12,6 @@ export {
     compose,
     logger,
     thunk,
-    promise
+    promise,
+    combineReducers,
 }
