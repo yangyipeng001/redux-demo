@@ -1,6 +1,8 @@
 import { Component } from "react";
-import {connect} from 'react-redux'
-import { bindActionCreators } from "redux";
+// import {connect} from 'react-redux'
+// import { bindActionCreators } from "redux";
+import { bindActionCreators } from "../redux-nut";
+import {connect} from '../react-redux-nut'
 
 // HOC: higer order component，高阶组件：是个函数，接受组件作为参数，返回新的组件
 export default connect(

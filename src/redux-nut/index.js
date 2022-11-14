@@ -5,6 +5,7 @@ import logger from './logger'
 import thunk from './thunk'
 import promise from './promise'
 import combineReducers from './combineReducers'
+import bindActionCreators from './bindActionCreators'
 
 export {
     createStore,
@@ -14,4 +15,5 @@ export {
     thunk,
     promise,
     combineReducers,
+    bindActionCreators,
 }
