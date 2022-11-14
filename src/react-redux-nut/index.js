@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useLayoutEffect,useState, useCallback } from 'react'
+import React, { useContext, useEffect, useReducer, useLayoutEffect,useState, useCallback, useSyncExternalStore } from 'react'
 import { bindActionCreators } from '../redux-nut'
 
 // Context传值 跨组件层级传递数据
@@ -19,7 +19,8 @@ export const connect = (mapStateToProps, mapDispatchToProps) => (WrappedComponen
     const store = useContext(Context)
     const {getState, dispatch, subscribe} = store
 
-    const stateProps = mapStateToProps(getState())
+    // react 17
+    // const stateProps = mapStateToProps(getState())
     let dispatchProps = {dispatch}
     if (typeof mapDispatchToProps === 'function') {
         dispatchProps = mapDispatchToProps(dispatch)
@@ -28,19 +29,26 @@ export const connect = (mapStateToProps, mapDispatchToProps) => (WrappedComponen
         dispatchProps = bindActionCreators(mapDispatchToProps, dispatch)
     }
 
-    // 订阅
-    // const [, forceUpdate] = useReducer((x) => x + 1, 0)
-    const forceUpdate = useForceUpdate()
-    // DOM 因为useEffect有延迟
-    useLayoutEffect(() => {
-        const unsubscribe = subscribe(() => {
-            forceUpdate()
-        })
+    // 订阅 react 17
+    const [, forceUpdate] = useReducer((x) => x + 1, 0)
+    // const forceUpdate = useForceUpdate()
+    // // DOM 因为useEffect有延迟
+    // useLayoutEffect(() => {
+    //     const unsubscribe = subscribe(() => {
+    //         forceUpdate()
+    //     })
 
-        return () => {
-            unsubscribe()
-        }
-    }, [subscribe])
+    //     return () => {
+    //         unsubscribe()
+    //     }
+    // }, [subscribe])
+
+    // 订阅 react 18
+    const state = useSyncExternalStore(() => {
+        subscribe(forceUpdate)
+    }, getState)
+    console.log('checked', state === getState())
+    const stateProps = mapStateToProps(state)
 
     return <WrappedComponent {...props} {...stateProps} {...dispatchProps} />
 }
@@ -55,4 +63,40 @@ function useForceUpdate() {
     }, [])
 
     return update
+}
+
+
+// Hooks
+export function useSelector(selector) {
+    const store = useContext(Context)
+    const {getState, subscribe} = store
+    const forceUpdate = useForceUpdate()
+
+    // const selectedtSate = selector(getState())
+
+    // 订阅 react 17
+    // const [, forceUpdate] = useReducer((x) => x + 1, 0)
+    // // DOM 因为useEffect有延迟
+    // useLayoutEffect(() => {
+    //     const unsubscribe = subscribe(() => {
+    //         forceUpdate()
+    //     })
+
+    //     return () => {
+    //         unsubscribe()
+    //     }
+    // }, [subscribe])
+    const state = useSyncExternalStore(() => {
+        subscribe(forceUpdate)
+    }, getState)
+    const selectedtSate = selector(state)
+
+    return selectedtSate
+}
+
+export function useDispatch() {
+    const store = useContext(Context)
+    const {dispatch} = store
+
+    return dispatch
 }
